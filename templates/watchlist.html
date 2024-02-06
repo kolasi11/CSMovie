@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Watchlist
+{% endblock %}
+
+{% block main %}
+    <h2>Welcome to Your Watchlist</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th cope="col">#</th>
+                <th cope="col">Name</th>
+                <th cope="col">Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+        <!-- Loop through the database entries to display them in this table -->
+            {% for movie in watchlist %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td><a class="nav-link" href="{{ url_for('details', type=movie.movie_id) }}">{{ movie.movie_name }}</a></td>
+                    <td>
+                        <form method="post" action="{{ url_for('watchlist', type=movie.movie_id) }}">
+                            <input class="btn btn-primary" type="submit" name="remove" value="Remove from Watchlist">
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

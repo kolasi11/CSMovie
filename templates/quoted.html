@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Result
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-5 g-4">
+            {% for result in results.search %}
+                <div class="col">
+                    <div class="card" style="width: 15rem; height: 23rem; border-radius: 10px">
+                        <img src="{{ result.Poster }}" class="card-img-fluid" style="height:20rem; border-radius: 10px 10px 0px 0px" alt="{{ result.Title }}">
+                        <div class="card-body text-truncate">
+                            <a href="{{ url_for("details", type=result.imdbID) }}">{{ result.Title }}</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

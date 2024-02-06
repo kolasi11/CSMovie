@@ -1,0 +1,107 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Details
+{% endblock %}
+
+{% block main %}
+    <div class="text-center">
+        <img src="{{ result.poster }}" alt="Card image cap">
+    </div>
+    <div class="container bg-white" style="text-align: left; border-radius: 10px">
+
+        <div class="row">
+            <div class="col-12 col-md-auto">
+                <h1 class="card-title fs-4 mt-3 text-center">{{ result.title }}({{ result.year }})</h1>
+            </div>
+
+            <div class="col-12 col-md-4 pt-2" style="text-align: right">
+                {% if session["user_id"] %}
+                    {% if result.imdbID in user_movies %}
+                        <form method="post" action="{{ url_for('add_movie', movie_id=result.imdbID) }}">
+                            <input class="btn btn-primary" type="submit" name="remove" value="Remove from Watchlist">
+                        </form>
+                    {% else %}
+                        <form method="post" action="{{ url_for('add_movie', movie_id=result.imdbID) }}">
+                            <input class="btn btn-primary" type="submit" name="add" value="Add to Watchlist">
+                        </form>
+                    {% endif %}
+
+                {% else %}
+                    <form method="post" action="{{ url_for('add_movie', movie_id=result.imdbID) }}">
+                        <input class="btn btn-primary" type="button" value="Add to Watchlist" disabled>
+                    </form>
+                {% endif %}
+            </div>
+
+            <div class="fst-italic lh-sm mb-2">{{ result.plot }}</div>
+
+            <div class="row">
+                <div class="col-12 col-md-8">
+
+                    <p class="mb-1">
+                        <strong>Genre:</strong>
+                        {% for genre in result.genres.split() %}
+                            {{ genre }}
+                        {% endfor %}
+                    </p>
+
+                    <p class="mb-1">
+                        <strong>Director:</strong>
+                        {% for director in result.directors.split() %}
+                            {{ director }}
+                        {% endfor %}
+                    </p>
+
+                    <p class="mb-1">
+                        <strong>Writer:</strong>
+                        {% for writer in result.writers.split() %}
+                            {{ writer }}
+                        {% endfor %}
+                    </p>
+
+                    <p class="mb-1">
+                        <strong>Actors:</strong>
+                        {% for actor in result.actors.split() %}
+                            {{ actor }}
+                        {% endfor %}
+                    </p>
+                    
+                    <p class="mb-1" style="text-transform: capitalize">
+                        <strong>Type:</strong>
+                        {{ result.type }}
+                    </p>
+                </div>
+                <div class="col-12 col-md-4">
+                    <p class="mb-1">
+                        <strong>Language:</strong>
+                        {% for language in result.languages.split() %}
+                            {{ language }}
+                        {% endfor %}
+                    </p>
+
+                    <p class="mb-1">
+                        <strong>Country:</strong>
+                        {% for country in result.countries.split() %}
+                            {{ country }}
+                        {% endfor %}
+                    </p>
+
+                    <p class="mb-1">
+                        <strong>Runtime:</strong>
+                        {{ result.runtime }}
+                    </p>
+
+                    <p class="mb-1">
+                        <strong>Rating:</strong>
+                        {{ result.rating }}
+                    </p>
+
+                    <p class="mb-1">
+                        <strong>Released:</strong>
+                        {{ result.release }}
+                    </p>
+                </div>
+            </div>
+        </div>
+{% endblock %}
